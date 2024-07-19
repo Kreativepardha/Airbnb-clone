@@ -3,6 +3,9 @@ import { InputBox } from "../components/utils/InputBox"
 import { ChangeEvent, FormEvent, useState } from "react"
 import axios, { Axios } from "axios"
 import { BACKEND_URL } from "../config"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { userState } from "../atoms/userAtoms"
+import { authState } from "../state/authState"
 
 
 export const Login = () => {
@@ -12,6 +15,10 @@ export const Login = () => {
     const [error,setError] = useState('')
     const [emailError,setEmailError] = useState(false)
     const [passwordError,setPasswordError] = useState(false)
+    // const [user,setUser] = useRecoilState(userState)
+
+    const setAuth = useSetRecoilState(authState)
+
     const navigate = useNavigate()
 
 
@@ -55,11 +62,14 @@ export const Login = () => {
             })
           
             if(response.status === 200) {
-                const {token} = response.data
-                console.log(token)
+                const {token , name , email, id } = response.data
                 if(token) {
-                    localStorage.setItem("token",token)
-                    navigate("/")
+                    sessionStorage.setItem("token",token)
+                    // setUser({name, token,email, id })
+                    const userData = { id, name, email, token };
+                    setAuth(userData)
+                    sessionStorage.setItem('user', JSON.stringify(userData));
+                    navigate("/dashboard/profile")
                 }else {
                     setError("Please try to login again")
                 }
@@ -67,8 +77,12 @@ export const Login = () => {
             } else {
                 setError("An error occurred during login. Please try again")
             }
-            alert("registration successfull")
-         } catch (err:any) {
+
+
+            // ADD CONFIRMATION MODELLLLLLLL
+
+            
+        } catch (err:any) {
             if (err.response && err.response.status === 409) {
                 setError("Email has already been taken");
             }
@@ -88,6 +102,7 @@ export const Login = () => {
             <h1 className="font-bold relative top-10 left-20 text-3xl">Login</h1>
         <form onSubmit={handleSubmit}    className="w-2/4 shadow-md h-80 mt-20 rounded-lg p-6 bg-white hover:shadow-lg ">
         {
+            
                 error && <p className="text-red-500 text-center pb-2 -mb-4">{error}</p>
             }
             <InputBox 

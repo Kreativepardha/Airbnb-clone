@@ -70,6 +70,9 @@ export const loginUser = async (req: any, res: any) => {
       const token = jwt.sign({ userId }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
       res.status(200).json({
         msg: "Login successful",
+        name:existingUser.name   ,
+        email:existingUser.email,
+        id:existingUser._id,
         token: `Bearer ${token}`
       });
     } catch (err:any) {
@@ -83,11 +86,22 @@ export const loginUser = async (req: any, res: any) => {
   
 export const logoutUser = async (req: any, res: any) => {
     try {
-        res.removeHeader("Authorization");
-        res.json({ msg: "Logout Successful" });
+      const token = req.header("Authorization").replace("Bearer ", "");
+      res.status(200).json({ msg: "Logout Successful" });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ msg: "Server Error" });
     }
 };
 
+export const getUser = async(req:any, res:any) => {
+  const {id} = req.params
+  if(!id) return res.json({msg: "Id not found"})
+    const existingUser = await User.findOne({_id:id})
+  if(!existingUser) return res.json({msg:"USer not available"})
+     return res.json({
+      id:existingUser._id,
+      name:existingUser.name,
+      email:existingUser.email
+    })
+}

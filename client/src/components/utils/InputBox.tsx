@@ -25,7 +25,7 @@ export const InputBox: React.FC<InputBoxProps> = ({
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
-                className={`w-full p-2 border rounded-full text-black ${error ? 'border-primary' : 'border-gray-200'}`}
+                className={`w-full p-2 border rounded-lg text-black ${error ? 'border-primary' : 'border-gray-200'}`}
 />
 {error && errorMsg && <span  className="text-red-400 text-sm mt-1"> {errorMsg} </span>   }
     </div>

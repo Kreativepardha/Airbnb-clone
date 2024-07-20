@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
 import { InputBox } from "../components/utils/InputBox"
 import { ChangeEvent, FormEvent, useState } from "react"
-import axios, { Axios } from "axios"
+import axios from "axios"
 import { BACKEND_URL } from "../config"
-import { useRecoilState, useSetRecoilState } from "recoil"
-import { userState } from "../atoms/userAtoms"
+import {  useSetRecoilState } from "recoil"
+
 import { authState } from "../state/authState"
 
 
@@ -57,7 +57,7 @@ export const Login = () => {
             }
 
          try {
-          const response = await  axios.post(`${BACKEND_URL}/user/login`,{
+          const response = await  axios.post(`${BACKEND_URL}/api/v1/user/login`,{
                 email,password
             })
           

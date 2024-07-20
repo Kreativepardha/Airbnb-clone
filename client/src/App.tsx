@@ -31,6 +31,7 @@ function App() {
             <Route path="/" element={<Landing />  } />
             <Route path="/login" element={<Login />  } />
             <Route path="/register" element={<Register />  } />
+            <Route path="/dashboard" element={<Dashboard />  } />
             <Route path="/dashboard/:subpage" element={<Dashboard />  } />
             <Route path="/dashboard/:subpage/:action" element={<Dashboard />  } />
 

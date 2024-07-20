@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link  } from "react-router-dom"
 import { InputBox } from "../components/utils/InputBox"
 import { ChangeEvent, FormEvent, useState } from "react"
 import axios from "axios"
@@ -15,7 +15,7 @@ export const Register = () => {
         const [passwordError,setPasswordError] = useState(false)
         const [nameError,setNameError] = useState(false)
 
-        const navigate = useNavigate()
+        // const navigate = useNavigate()
 
 
         const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
